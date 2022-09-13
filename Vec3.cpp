@@ -60,6 +60,13 @@ void Vec3::print() {
     printf("[%1.2f, %1.2f, %1.2f]", this->x, this->y, this->z);
 }
 
+Vec3& Vec3::operator=(const Vec3 &vec) {
+    x = vec.x;
+    y = vec.y;
+    z = vec.z;
+    return *this;
+}
+
 void Vec3::normalize() {
     float c = sqrt(x * x + y * y + z * z);
     if (c > 0.000001) {
@@ -67,5 +74,19 @@ void Vec3::normalize() {
         y = y / c;
         z = z / c;
     }
+}
+
+Vec3::Vec3(const Vec3 &vec) {
+    x = vec.x;
+    y = vec.y;
+    z = vec.z;
+}
+
+Vec3 Vec3::operator+(float c) {
+    return Vec3(x + c, y + c, z + c);
+}
+
+Vec3 Vec3::operator-(float c) {
+    return Vec3(x - c, y - c, z - c);
 }
 
