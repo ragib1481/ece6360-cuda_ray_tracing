@@ -69,7 +69,3 @@ void Vec3::normalize() {
     }
 }
 
-float Vec3::norm2() {
-    return x * x + y * y + z * z;
-}
-
