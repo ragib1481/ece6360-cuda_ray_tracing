@@ -1,29 +1,28 @@
 //
-// Created by ragib1481 on 9/11/22.
+// Created by ragib1481 on 9/12/22.
 //
 
 #ifndef ASSIGNMENT1_VEC3_H
 #define ASSIGNMENT1_VEC3_H
-
+#include <iostream>
 
 class Vec3 {
-    float x;
-    float y;
-    float z;
-
+    float r[3];
 public:
     Vec3();
     Vec3(float x, float y, float z);
-    Vec3 operator+ (const Vec3& vec);
-    Vec3 operator-(const Vec3 &vec);
-    Vec3 operator* (const Vec3& vec);
-    Vec3 operator* (float c);
-    Vec3 operator/ (const Vec3& vec);
-    Vec3 operator/ (float c);
-    void normalize();
-    float norm2();
-    float dot (const Vec3& vec);
-    void print();
+    Vec3(const Vec3& vec);
+    Vec3 operator+(const Vec3& vec);
+    Vec3 operator+(float c);
+    Vec3 operator-(const Vec3& vec);
+    Vec3 operator-(float c);
+    Vec3 operator*(const Vec3& vec);
+    Vec3 operator*(float c);
+    Vec3 operator/(const Vec3& vec);
+    Vec3 operator/(float c);
+    Vec3& operator=(const Vec3& vec);
+    float dot(const Vec3& vec);
+    friend std::ostream& operator<<(std::ostream& os, const Vec3& vec);
 
 };
 
