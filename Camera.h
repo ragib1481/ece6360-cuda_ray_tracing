@@ -20,7 +20,7 @@ class Camera {
     Vec3 cameraPoint;
     int numPixels;
     float distanceImagePlane;
-    const float dr =  0.1;                            // distance between pixels
+    const float imgPlaneExtent = 1;
     std::vector<std::vector<Color>> pixels;
     std::vector<std::vector<Ray>> rays;
 

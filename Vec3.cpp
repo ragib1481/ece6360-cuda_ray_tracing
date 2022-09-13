@@ -4,6 +4,7 @@
 
 #include "Vec3.h"
 #include <iostream>
+#include <cmath>
 
 Vec3::Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
 
@@ -57,5 +58,18 @@ void Vec3::print() {
     //std::cout << "[" << this->x << "," << this->y << "," << this->z << "]";
     // printf("[%1.3f, %1.3f, %1.3f]", this->x, this->y, this->z);
     printf("[%1.2f, %1.2f, %1.2f]", this->x, this->y, this->z);
+}
+
+void Vec3::normalize() {
+    float c = sqrt(x * x + y * y + z * z);
+    if (c > 0.000001) {
+        x = x / c;
+        y = y / c;
+        z = z / c;
+    }
+}
+
+float Vec3::norm2() {
+    return x * x + y * y + z * z;
 }
 

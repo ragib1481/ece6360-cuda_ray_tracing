@@ -20,11 +20,12 @@ Camera::Camera(int numPixels, float distanceImagePlane):
     }
 
     // initialize one ray for each pixel, with the value p(0,0,0) and v = (x, y, d) - p.
+    const float dr = imgPlaneExtent * 2 / numPixels;
     rays.resize(numPixels);
     for (int x=0; x<rays.size(); x++) {
         rays[x].resize(numPixels);
         for (int y=0; y<rays[x].size(); y++){
-            Vec3 v((float)(x - numPixels / 2) * dr, (float)(y - numPixels / 2) * dr, this->distanceImagePlane);
+            Vec3 v((x * dr - imgPlaneExtent), (y * dr - imgPlaneExtent), distanceImagePlane);
             rays[x][y] = Ray(cameraPoint, v);
         }
     }

@@ -20,11 +20,11 @@ public:
     Vec3 operator* (float c);
     Vec3 operator/ (const Vec3& vec);
     Vec3 operator/ (float c);
+    void normalize();
+    float norm2();
     float dot (const Vec3& vec);
     void print();
 
 };
-
-
 
 #endif //ASSIGNMENT1_VEC3_H

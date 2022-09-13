@@ -8,6 +8,7 @@
 Ray::Ray(Vec3 p, Vec3 v) {
     this->p = p;
     this->v = v - p;
+    this->v.normalize();
 }
 
 Ray::Ray() {
@@ -16,10 +17,12 @@ Ray::Ray() {
 }
 
 bool Ray::intersects(Sphere sphere) {
-    float a = v.dot(v);
+    // float a = v.dot(v);
+    float a = v.norm2();
     float b = v.dot(p - sphere.center());
     float r = sphere.radius();
-    float c = (p - sphere.center()).dot(p - sphere.center()) - r * r;
+    // float c = (p - sphere.center()).dot(p - sphere.center()) - r * r;
+    float c = (p - sphere.center()).norm2() - r * r;
     if ((b * b - 4 * a * c) >= 0)
         return true;
     else
