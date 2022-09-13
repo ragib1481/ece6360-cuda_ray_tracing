@@ -17,12 +17,10 @@ Ray::Ray() {
 }
 
 bool Ray::intersects(Sphere sphere) {
-    // float a = v.dot(v);
-    float a = v.norm2();
-    float b = v.dot(p - sphere.center());
+    float a = v.dot(v);
+    float b = 2 * v.dot(p - sphere.center());
     float r = sphere.radius();
-    // float c = (p - sphere.center()).dot(p - sphere.center()) - r * r;
-    float c = (p - sphere.center()).norm2() - r * r;
+    float c = (p - sphere.center()).dot(p - sphere.center()) - r * r;
     if ((b * b - 4 * a * c) >= 0)
         return true;
     else
