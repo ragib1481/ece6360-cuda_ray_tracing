@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.23)
 project(assignment1)
 
 set(CMAKE_CXX_STANDARD 20)
+# set(Boost_INCLUDE_DIR /usr/include)
+# set(Boost_LIBRARY_DIR /usr/lib/x86_64-linux-gnu)
+
+# find_package(Boost REQUIRED)
+#
+# include_directories(${Boost_INLCUDE_DIR})
 
 configure_file(spheres.txt
         spheres.txt COPYONLY)

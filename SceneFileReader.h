@@ -7,6 +7,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include "Sphere.h"
 #include "Vec3.h"
@@ -20,7 +21,7 @@ class SceneFileReader {
 
 public:
     SceneFileReader(string lightFileName, string sphereFileName);
-    // vector<Sphere> getSpheres();
+    vector<Sphere> getSpheres();
 };
 
 
