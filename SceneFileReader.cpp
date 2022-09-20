@@ -19,14 +19,28 @@ vector<Sphere> SceneFileReader::getSpheres() {
         istringstream in(line);
         float x, y, z, radius, b, g , r;
         in >> x >> y >> z >> radius>> b >> g >> r;
-        b = 255.0 * b;
-        g = 255.0 * g;
-        r = 255.0 * r;
         Vec3 center(x, y, z);
-        Color color((char)b, (char)g, (char)r);
+        Color color(b, g, r);
         Sphere sphere(center, radius, color);
         spheres.push_back(sphere);
     }
     return spheres;
  }
+
+vector<Light> SceneFileReader::getLights() {
+    vector<Light> lights;
+
+    ifstream file(lightFileName);
+    string line;
+    while (getline(file, line)) {
+        istringstream in(line);
+        float x, y, z, b, g , r;
+        in >> x >> y >> z >> b >> g >> r;
+        Vec3 center(x, y, z);
+        Color color(b, g, r);
+        Light light(center, color);
+        lights.push_back(light);
+    }
+    return lights;
+}
 

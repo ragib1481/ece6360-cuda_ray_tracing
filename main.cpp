@@ -16,9 +16,10 @@ int main() {
     SceneFileReader reader("./lights.txt", "./spheres.txt");
 
     vector<Sphere> spheres;
+    vector<Light> lights;
     spheres = reader.getSpheres();
-
-    camera.render(spheres);
+    lights = reader.getLights();
+    camera.render(spheres, lights);
     camera.saveImage("./image.tga");
 
     return 0;

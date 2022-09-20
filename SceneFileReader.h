@@ -22,6 +22,7 @@ class SceneFileReader {
 public:
     SceneFileReader(string lightFileName, string sphereFileName);
     vector<Sphere> getSpheres();
+    vector<Light> getLights();
 };
 
 

@@ -30,3 +30,17 @@ bool Ray::intersects(Sphere sphere) {
 void Ray::print() {
     v.print();
 }
+
+Vec3 Ray::normalAtIntersection(Sphere sphere) {
+    float a = v.dot(v);
+    float b = 2 * v.dot(p - sphere.center());
+    float r = sphere.radius();
+    float c = (p - sphere.center()).dot(p - sphere.center()) - r * r;
+
+    // only take the point that is closer to the image plane
+    float t = (-b - sqrt(b * b - 4 * a *c)) / (2 * a);
+    Vec3 intersectionPoint = p + v * t;
+    Vec3 normal = intersectionPoint - sphere.center();
+    normal.normalize();
+    return normal;
+}

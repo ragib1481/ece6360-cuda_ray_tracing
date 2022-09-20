@@ -15,6 +15,7 @@ public:
     Ray();
     Ray(Vec3 p, Vec3 v);
     bool intersects(Sphere sphere);
+    Vec3 normalAtIntersection(Sphere sphere);
     void print();
 };
 

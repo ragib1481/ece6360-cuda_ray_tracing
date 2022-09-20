@@ -15,7 +15,7 @@ Camera::Camera(int numPixels, float distanceImagePlane):
     for (int i=0; i<pixels.size(); i++) {
         pixels[i].resize(numPixels);
         for (int j=0; j<pixels[i].size(); j++) {
-            pixels[i][j] = Color((char)255, (char)255, (char)255);
+            pixels[i][j] = Color(1.0, 1.0, 1.0);
         }
     }
 
@@ -31,12 +31,19 @@ Camera::Camera(int numPixels, float distanceImagePlane):
     }
 }
 
-void Camera::render(const std::vector<Sphere>& spheres) {
+void Camera::render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights) {
     for (int i=0; i<rays.size(); i++) {
         for (int j=0; j<rays[i].size(); j++) {
             for (auto sphere: spheres) {
                 if (rays[i][j].intersects(sphere)) {
-                    pixels[i][j] = sphere.getColor();
+                    // set initial light intensity
+                    Vec3 n = rays[i][j].normalAtIntersection(sphere);
+
+                    // calculate contribution from each light
+                    float lightIntensity = sphere.getTotalLightIntensity(lights, n);
+
+                    // assign color
+                    pixels[i][j] = sphere.getColor(lightIntensity);
                 }
             }
         }
@@ -46,12 +53,27 @@ void Camera::render(const std::vector<Sphere>& spheres) {
 void Camera::saveImage(const std::string& filename) {
 
     char *bytes = new char[numPixels * numPixels * 3];
-    int k = 0;
+    float maxColor = 0.0;
+    float b, g, r;
     for (int i=0; i<pixels.size(); i++) {
         for (int j = 0; j < pixels[i].size(); j++) {
-            bytes[k++] = pixels[i][j].getBlue();
-            bytes[k++] = pixels[i][j].getGreen();
-            bytes[k++] = pixels[i][j].getRed();
+            b = pixels[i][j].getBlue();
+            g = pixels[i][j].getGreen();
+            r = pixels[i][j].getRed();
+            if (b > maxColor)
+                maxColor = b;
+            if (g > maxColor)
+                maxColor = g;
+            if (r > maxColor)
+                maxColor = r;
+        }
+    }
+    int k = 0;
+    for (int i=0; i<numPixels; i++) {
+        for (int j = 0; j < numPixels; j++) {
+            bytes[k++] = (char)(255 * pixels[j][i].getBlue() / maxColor);
+            bytes[k++] = (char)(255 * pixels[j][i].getGreen() / maxColor);
+            bytes[k++] = (char)(255 * pixels[j][i].getRed() / maxColor);
         }
     }
 
