@@ -2,12 +2,14 @@ cmake_minimum_required(VERSION 3.23)
 project(assignment1)
 
 set(CMAKE_CXX_STANDARD 20)
-# set(Boost_INCLUDE_DIR /usr/include)
-# set(Boost_LIBRARY_DIR /usr/lib/x86_64-linux-gnu)
 
-# find_package(Boost REQUIRED)
-#
-# include_directories(${Boost_INLCUDE_DIR})
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 configure_file(spheres.txt
         spheres.txt COPYONLY)

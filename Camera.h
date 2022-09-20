@@ -28,7 +28,6 @@ public:
     Camera (int numPixels, float distanceImagePlane);
     void render (const std::vector<Sphere>& spheres, const std::vector<Light>& lights);
     void saveImage (const std::string& filename);
-    void printRays();
 };
 
 

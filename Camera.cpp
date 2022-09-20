@@ -12,9 +12,9 @@ Camera::Camera(int numPixels, float distanceImagePlane):
 
     // initialize pixels to zero. to be filled up later in rendering.
     pixels.resize(numPixels);
-    for (int i=0; i<pixels.size(); i++) {
+    for (size_t i=0; i<pixels.size(); i++) {
         pixels[i].resize(numPixels);
-        for (int j=0; j<pixels[i].size(); j++) {
+        for (size_t j=0; j<pixels[i].size(); j++) {
             pixels[i][j] = Color(1.0, 1.0, 1.0);
         }
     }
@@ -22,9 +22,9 @@ Camera::Camera(int numPixels, float distanceImagePlane):
     // initialize one ray for each pixel, with the value p(0,0,0) and v = (x, y, d) - p.
     const float dr = imgPlaneExtent * 2 / numPixels;
     rays.resize(numPixels);
-    for (int x=0; x<rays.size(); x++) {
+    for (size_t x=0; x<rays.size(); x++) {
         rays[x].resize(numPixels);
-        for (int y=0; y<rays[x].size(); y++){
+        for (size_t y=0; y<rays[x].size(); y++){
             Vec3 v((x * dr - imgPlaneExtent), (y * dr - imgPlaneExtent), distanceImagePlane);
             rays[x][y] = Ray(cameraPoint, v);
         }
@@ -32,8 +32,8 @@ Camera::Camera(int numPixels, float distanceImagePlane):
 }
 
 void Camera::render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights) {
-    for (int i=0; i<rays.size(); i++) {
-        for (int j=0; j<rays[i].size(); j++) {
+    for (size_t i=0; i<rays.size(); i++) {
+        for (size_t j=0; j<rays[i].size(); j++) {
             for (auto sphere: spheres) {
                 if (rays[i][j].intersects(sphere)) {
                     // set initial light intensity
@@ -55,8 +55,8 @@ void Camera::saveImage(const std::string& filename) {
     char *bytes = new char[numPixels * numPixels * 3];
     float maxColor = 0.0;
     float b, g, r;
-    for (int i=0; i<pixels.size(); i++) {
-        for (int j = 0; j < pixels[i].size(); j++) {
+    for (size_t i=0; i<pixels.size(); i++) {
+        for (size_t j = 0; j < pixels[i].size(); j++) {
             b = pixels[i][j].getBlue();
             g = pixels[i][j].getGreen();
             r = pixels[i][j].getRed();
@@ -95,14 +95,4 @@ void Camera::saveImage(const std::string& filename) {
     outfile.write(bytes, numPixels * numPixels * 3);	// write the image data
     outfile.close();	// close the file
 
-}
-
-void Camera::printRays() {
-    for (int x=0; x<rays.size(); x++) {
-        for (int y=0; y<rays[x].size(); y++){
-            rays[x][y].print();
-            std::cout << "  ";
-        }
-        std::cout << std::endl;
-    }
 }
