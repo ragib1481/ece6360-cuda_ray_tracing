@@ -34,18 +34,7 @@ Camera::Camera(int numPixels, float distanceImagePlane):
 void Camera::render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights) {
     for (size_t i=0; i<rays.size(); i++) {
         for (size_t j=0; j<rays[i].size(); j++) {
-            for (auto sphere: spheres) {
-                if (rays[i][j].intersects(sphere)) {
-                    // set initial light intensity
-                    Vec3 n = rays[i][j].normalAtIntersection(sphere);
-
-                    // calculate contribution from each light
-                    float lightIntensity = sphere.getTotalLightIntensity(lights, n);
-
-                    // assign color
-                    pixels[i][j] = sphere.getColor(lightIntensity);
-                }
-            }
+            pixels[i][j] = rays[i][j].trace(spheres, lights);
         }
     }
 }
