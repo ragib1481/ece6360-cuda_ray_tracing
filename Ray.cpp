@@ -63,7 +63,7 @@ Vec3 Ray::getIntersectionPoint(Sphere sphere) {
     return intersectionPoint;
 }
 
-Color Ray::trace(const std::vector<Sphere> &spheres, const std::vector<Light> &lights) {
+void Ray::trace(const std::vector<Sphere> &spheres, const std::vector<Light> &lights, Color* pixel) {
     float minDist = std::numeric_limits<float>::infinity();
     float dist = 0.0;
     Color closestColor(1.0, 1.0, 1.0);
@@ -86,6 +86,6 @@ Color Ray::trace(const std::vector<Sphere> &spheres, const std::vector<Light> &l
             }
         }
     }
-    return closestColor;
+    *pixel = closestColor;
 }
 

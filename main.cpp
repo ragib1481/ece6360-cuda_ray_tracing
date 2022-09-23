@@ -11,7 +11,7 @@ using namespace std;
 typedef std::chrono::high_resolution_clock timer;
 
 int main() {
-    Camera camera(1024, 1.5);
+    Camera camera(4096, 1.5);
     SceneFileReader reader("./lights.txt", "./spheres.txt");
 
     // load data
@@ -26,9 +26,19 @@ int main() {
     auto end = timer::now();
 
     // save rendered image
-    camera.saveImage("./image.tga");
+    camera.saveImage("./st_image.tga");
 
     std::chrono::milliseconds t = std::chrono::duration_cast<std::chrono::milliseconds> (end - start);
-    cout << "Elapsed time: " << t.count() << "ms" << endl;
+    cout << "Single Thread Elapsed time: " << t.count() << "ms" << endl;
+
+    start = timer::now();
+    camera.renderMultiThreaded(spheres, lights);
+    end = timer::now();
+
+    // save rendered image
+    camera.saveImage("./mt_image.tga");
+
+    t = std::chrono::duration_cast<std::chrono::milliseconds> (end - start);
+    cout << "Multi-threaded Elapsed time: " << t.count() << "ms" << endl;
     return 0;
 }

@@ -16,7 +16,7 @@ public:
     Ray(Vec3 p, Vec3 v);
     bool intersects(Sphere sphere);
     Vec3 normalAtIntersection(Sphere sphere);
-    Color trace(const std::vector<Sphere>& spheres, const std::vector<Light>& lights);
+    void trace(const std::vector<Sphere>& spheres, const std::vector<Light>& lights, Color* pixel);
     float distanceToPoint(Vec3 point);
     Vec3 getIntersectionPoint(Sphere sphere);
     void print();

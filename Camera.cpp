@@ -33,10 +33,24 @@ Camera::Camera(int numPixels, float distanceImagePlane):
 
 void Camera::render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights) {
     for (size_t i=0; i<rays.size(); i++) {
-        for (size_t j=0; j<rays[i].size(); j++) {
-            pixels[i][j] = rays[i][j].trace(spheres, lights);
-        }
+        for (size_t j=0; j<rays[i].size(); j++)
+            rays[i][j].trace(spheres, lights, &pixels[i][j]);
     }
+}
+
+void Camera::renderMultiThreaded(const std::vector<Sphere>& spheres, const std::vector<Light>& lights) {
+    std::thread* t = new std::thread[maxNumThreads];
+    for (size_t i=0; i<rays.size(); i+=maxNumThreads) {
+        for (size_t ti=0; ti<maxNumThreads; ti++)
+            t[ti] = std::thread(&Camera::renderBlock, this, i, spheres, lights);
+        for (size_t ti=0; ti<maxNumThreads; ti++)
+            t[ti].join();
+    }
+}
+
+void Camera::renderBlock(int ix, const std::vector<Sphere> &spheres, const std::vector<Light> &lights) {
+    for (size_t j=0; j<rays[ix].size(); j++)
+        rays[ix][j].trace(spheres, lights, &pixels[ix][j]);
 }
 
 void Camera::saveImage(const std::string& filename) {
