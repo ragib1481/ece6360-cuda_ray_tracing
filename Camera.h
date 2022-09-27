@@ -33,6 +33,7 @@ public:
     void renderMultiThreaded (const std::vector<Sphere>& spheres, const std::vector<Light>& lights);
     void renderBlock (int ix, const std::vector<Sphere>& spheres, const std::vector<Light>& lights);
     void saveImage (const std::string& filename);
+    void reset();
 };
 
 

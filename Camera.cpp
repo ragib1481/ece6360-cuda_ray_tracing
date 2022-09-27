@@ -31,6 +31,26 @@ Camera::Camera(int numPixels, float distanceImagePlane):
     }
 }
 
+void Camera::reset(){
+    // initialize pixels to zero. to be filled up later in rendering.
+    for (size_t i=0; i<pixels.size(); i++) {
+        pixels[i].resize(numPixels);
+        for (size_t j=0; j<pixels[i].size(); j++) {
+            pixels[i][j] = Color(1.0, 1.0, 1.0);
+        }
+    }
+
+    // initialize one ray for each pixel, with the value p(0,0,0) and v = (x, y, d) - p.
+    const float dr = imgPlaneExtent * 2 / numPixels;
+    for (size_t x=0; x<rays.size(); x++) {
+        rays[x].resize(numPixels);
+        for (size_t y=0; y<rays[x].size(); y++){
+            Vec3 v((x * dr - imgPlaneExtent), (y * dr - imgPlaneExtent), distanceImagePlane);
+            rays[x][y] = Ray(cameraPoint, v);
+        }
+    }
+}
+
 void Camera::render(const std::vector<Sphere>& spheres, const std::vector<Light>& lights) {
     for (size_t i=0; i<rays.size(); i++) {
         for (size_t j=0; j<rays[i].size(); j++)
