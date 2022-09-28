@@ -62,7 +62,7 @@ void Camera::renderMultiThreaded(const std::vector<Sphere>& spheres, const std::
     std::thread* t = new std::thread[maxNumThreads];
     for (size_t i=0; i<rays.size(); i+=maxNumThreads) {
         for (size_t ti=0; ti<maxNumThreads; ti++)
-            t[ti] = std::thread(&Camera::renderBlock, this, i, spheres, lights);
+            t[ti] = std::thread(&Camera::renderBlock, this, i+ti, spheres, lights);
         for (size_t ti=0; ti<maxNumThreads; ti++)
             t[ti].join();
     }
